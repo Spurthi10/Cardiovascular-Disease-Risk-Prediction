@@ -5,7 +5,7 @@ A full-stack web application for cardiovascular disease risk prediction, based o
 
 ---
 
-## 🏗️ Tech Stack
+##  Tech Stack
 
 - **Frontend**: HTML5, CSS3, Vanilla JavaScript
 - **Backend**: Node.js + Express.js
@@ -91,8 +91,8 @@ node server.js
 
 You should see:
 ```
-✅ MongoDB connected
-🚀 Server running at http://localhost:3000
+ MongoDB connected
+ Server running at http://localhost:3000
 ```
 
 ### Step 7 — Open in Browser
@@ -101,7 +101,7 @@ Visit: **http://localhost:3000**
 
 ---
 
-## 🚀 App Features
+##  App Features
 
 | Page | URL | Access |
 |------|-----|--------|
@@ -115,7 +115,7 @@ Visit: **http://localhost:3000**
 
 ---
 
-## 🔒 Authentication Flow
+##  Authentication Flow
 
 1. User registers → password bcrypt-hashed → stored in MongoDB
 2. User logs in → session created → stored in MongoDB via connect-mongo
@@ -124,7 +124,7 @@ Visit: **http://localhost:3000**
 
 ---
 
-## 🧠 CVD Risk Algorithm
+##  CVD Risk Algorithm
 
 The backend implements a Framingham-inspired scoring system that evaluates:
 - **Demographics**: Age, Gender, BMI
