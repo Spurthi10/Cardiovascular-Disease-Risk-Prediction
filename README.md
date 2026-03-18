@@ -7,7 +7,7 @@ A full-stack web application for cardiovascular disease risk prediction, based o
 
 ##  Tech Stack
 
-- **Frontend**: HTML5, CSS3, Vanilla JavaScript
+- **Frontend**: HTML, CSS, JavaScript
 - **Backend**: Node.js + Express.js
 - **Database**: MongoDB (via Mongoose)
 - **Auth**: Session-based with bcrypt password hashing
