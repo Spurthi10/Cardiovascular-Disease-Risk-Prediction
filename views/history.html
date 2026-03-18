@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>History — CardioGuard</title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="/" class="nav-logo">
+    <div class="logo-icon">🫀</div>
+    CardioGuard
+  </a>
+  <ul class="nav-links" id="nav-links"></ul>
+  <div class="nav-actions" id="nav-actions"></div>
+  <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+</nav>
+
+<div class="page-wrap">
+  <div class="page-content">
+
+    <div class="page-header fade-up">
+      <h1>Assessment History</h1>
+      <p>All your cardiovascular risk assessments, most recent first.</p>
+    </div>
+
+    <div id="historyContent">
+      <div style="text-align:center;padding:4rem;color:var(--text3)"><span class="loader"></span></div>
+    </div>
+
+  </div>
+</div>
+
+<script src="/js/main.js"></script>
+<script>
+initNav('history');
+initHamburger();
+getUser().then(u => { if (!u.loggedIn) window.location.href = '/login'; });
+
+async function loadHistory() {
+  const res = await fetch('/api/history');
+  const data = await res.json();
+  const el = document.getElementById('historyContent');
+
+  if (!data.success || data.predictions.length === 0) {
+    el.innerHTML = `
+      <div class="card" style="text-align:center;padding:3rem">
+        <div style="font-size:2rem;margin-bottom:1rem">📋</div>
+        <div style="font-family:var(--font-head);font-size:1.1rem;margin-bottom:0.5rem">No assessments yet</div>
+        <p style="color:var(--text2);margin-bottom:1.5rem">Run your first CVD risk assessment to see results here.</p>
+        <a href="/predict" class="btn btn-primary">Start Assessment →</a>
+      </div>`;
+    return;
+  }
+
+  el.innerHTML = `
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.25rem">
+      <div style="font-size:0.875rem;color:var(--text3)">${data.predictions.length} assessment(s) found</div>
+      <a href="/predict" class="btn btn-primary btn-sm">+ New Assessment</a>
+    </div>
+    <div class="table-wrap card" style="padding:0">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Date</th>
+            <th>Age / Gender</th>
+            <th>Risk Level</th>
+            <th>Probability</th>
+            <th>BP (sys/dia)</th>
+            <th>Cholesterol</th>
+            <th>BMI</th>
+            <th>Top Recommendation</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${data.predictions.map((p, i) => `
+            <tr>
+              <td style="color:var(--text3)">${i + 1}</td>
+              <td>${fmtDate(p.createdAt)}</td>
+              <td>${p.inputData.age} / ${p.inputData.gender}</td>
+              <td>${riskBadge(p.riskLevel)}</td>
+              <td><strong style="color:var(--text)">${p.probability}%</strong></td>
+              <td>${p.inputData.systolic}/${p.inputData.diastolic}</td>
+              <td>${p.inputData.cholesterol} mg/dL</td>
+              <td>${p.inputData.bmi}</td>
+              <td style="max-width:220px;white-space:normal;font-size:0.8125rem">${p.recommendations[0] || '—'}</td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
+loadHistory();
+</script>
+</body>
+</html>

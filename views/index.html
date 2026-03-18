@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CardioGuard — CVD Risk Prediction</title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar">
+  <a href="/" class="nav-logo">
+    <div class="logo-icon">🫀</div>
+    CardioGuard
+  </a>
+  <ul class="nav-links" id="nav-links"></ul>
+  <div class="nav-actions" id="nav-actions"></div>
+  <div class="hamburger" id="hamburger">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero" style="padding-top:5rem">
+  <div class="hero-content fade-up">
+    <div class="hero-tag">
+      🔬 Deep Learning · 1D-CNN · Attention Mechanism
+    </div>
+    <h1>Predict Your <span>Heart Risk</span><br>Before It's Too Late</h1>
+    <p class="hero-desc">
+      CardioGuard uses an advanced deep learning model combining 1D-CNN and self-attention
+      mechanisms — achieving <strong style="color:var(--text)">98.72% accuracy</strong> — to give you 
+      personalized cardiovascular disease risk predictions.
+    </p>
+    <div class="hero-actions">
+      <a href="/register" class="btn btn-primary">Get Your Risk Assessment →</a>
+      <a href="/about" class="btn btn-outline">Learn How It Works</a>
+    </div>
+
+    <div class="hero-stats">
+      <div>
+        <div class="hero-stat-val">98.72%</div>
+        <div class="hero-stat-label">Model Accuracy</div>
+      </div>
+      <div>
+        <div class="hero-stat-val">27</div>
+        <div class="hero-stat-label">Clinical Features Analyzed</div>
+      </div>
+      <div>
+        <div class="hero-stat-val">1,024</div>
+        <div class="hero-stat-label">Training Records</div>
+      </div>
+      <div>
+        <div class="hero-stat-val">3</div>
+        <div class="hero-stat-label">Risk Levels Detected</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Features -->
+<section class="features">
+  <div style="max-width:1200px;margin:0 auto">
+    <div class="sec-title">Why CardioGuard?</div>
+    <div class="sec-sub">Powered by peer-reviewed deep learning research presented at ICIIBMS 2024</div>
+    <div class="features-grid">
+      <div class="feature-card fade-up-d1">
+        <span class="feature-icon">🧠</span>
+        <div class="feature-title">Deep Feature Extraction</div>
+        <div class="feature-desc">An improved 1D-CNN architecture extracts complex patterns from your health data that traditional methods miss.</div>
+      </div>
+      <div class="feature-card fade-up-d2">
+        <span class="feature-icon">🎯</span>
+        <div class="feature-title">Self-Attention Mechanism</div>
+        <div class="feature-desc">Dynamically weighs which risk factors matter most for your unique health profile, improving prediction quality.</div>
+      </div>
+      <div class="feature-card fade-up-d1">
+        <span class="feature-icon">📊</span>
+        <div class="feature-title">Comprehensive Analysis</div>
+        <div class="feature-desc">Analyzes 27 clinical features including blood pressure, lipid panels, blood glucose, and lifestyle factors.</div>
+      </div>
+      <div class="feature-card fade-up-d2">
+        <span class="feature-icon">💡</span>
+        <div class="feature-title">Actionable Recommendations</div>
+        <div class="feature-desc">Receive personalized, evidence-based recommendations tailored to your identified risk factors.</div>
+      </div>
+      <div class="feature-card fade-up-d1">
+        <span class="feature-icon">📈</span>
+        <div class="feature-title">Track Your Progress</div>
+        <div class="feature-desc">Monitor how your risk profile changes over time with a complete prediction history dashboard.</div>
+      </div>
+      <div class="feature-card fade-up-d2">
+        <span class="feature-icon">🔒</span>
+        <div class="feature-title">Secure & Private</div>
+        <div class="feature-desc">Your health data is encrypted and stored securely. We never share your personal information.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section style="padding:5rem 1.5rem; text-align:center;">
+  <div style="max-width:600px;margin:0 auto">
+    <div class="sec-title fade-up">Ready to Check Your Heart Health?</div>
+    <p class="sec-sub fade-up-d1" style="margin:0.75rem 0 2rem">
+      Create a free account and get your personalized cardiovascular risk assessment in minutes.
+    </p>
+    <a href="/register" class="btn btn-primary fade-up-d2">Start Free Assessment →</a>
+  </div>
+</section>
+
+<footer>
+  <p>CardioGuard &mdash; Based on research: <em>Cardiovascular Disease Risk Prediction Based on Deep Feature Extraction</em> · ICIIBMS 2024</p>
+  <p style="margin-top:0.5rem">⚠️ For educational purposes only. Not a substitute for professional medical advice.</p>
+</footer>
+
+<script src="/js/main.js"></script>
+<script>
+  initNav('home');
+  initHamburger();
+</script>
+</body>
+</html>

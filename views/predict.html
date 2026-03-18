@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Predict Risk — CardioGuard</title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="/" class="nav-logo">
+    <div class="logo-icon">🫀</div>
+    CardioGuard
+  </a>
+  <ul class="nav-links" id="nav-links"></ul>
+  <div class="nav-actions" id="nav-actions"></div>
+  <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+</nav>
+
+<div class="page-wrap">
+  <div style="max-width:1080px;margin:0 auto;padding:2rem 1.5rem">
+
+    <div class="page-header fade-up">
+      <h1>CVD Risk Assessment</h1>
+      <p>Enter your clinical health data below. All 27 features are analyzed by our deep learning model.</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 360px;gap:1.5rem;align-items:start" id="mainGrid">
+
+      <!-- Form -->
+      <div>
+        <!-- Demographics -->
+        <div class="form-section fade-up">
+          <div class="form-section-title">👤 Demographics</div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Age (years)</label>
+              <input type="number" id="age" class="form-control" placeholder="e.g. 45" min="18" max="100" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Gender</label>
+              <select id="gender" class="form-control">
+                <option value="">Select gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">BMI (kg/m²)</label>
+              <input type="number" id="bmi" class="form-control" placeholder="e.g. 24.5" step="0.1" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Workload Level</label>
+              <select id="moderateWork" class="form-control">
+                <option value="">Select activity</option>
+                <option value="true">Moderate / Active</option>
+                <option value="false">Sedentary / Low Activity</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Blood Pressure -->
+        <div class="form-section fade-up-d1">
+          <div class="form-section-title">🩺 Blood Pressure</div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Systolic (mmHg)</label>
+              <input type="number" id="systolic" class="form-control" placeholder="e.g. 120" min="60" max="250" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Diastolic (mmHg)</label>
+              <input type="number" id="diastolic" class="form-control" placeholder="e.g. 80" min="40" max="150" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Lipid Panel -->
+        <div class="form-section fade-up-d1">
+          <div class="form-section-title">🧪 Lipid Panel</div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Total Cholesterol (mg/dL)</label>
+              <input type="number" id="cholesterol" class="form-control" placeholder="e.g. 195" min="100" max="500" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">HDL Cholesterol (mg/dL)</label>
+              <input type="number" id="hdl" class="form-control" placeholder="e.g. 55" min="10" max="150" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Triglycerides (mg/dL)</label>
+            <input type="number" id="triglycerides" class="form-control" placeholder="e.g. 120" min="30" max="1000" />
+          </div>
+        </div>
+
+        <!-- Blood Tests -->
+        <div class="form-section fade-up-d2">
+          <div class="form-section-title">🔬 Blood Tests</div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Glucose (mg/dL)</label>
+              <input type="number" id="glucose" class="form-control" placeholder="e.g. 95" min="40" max="500" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Hemoglobin (g/dL)</label>
+              <input type="number" id="hemoglobin" class="form-control" placeholder="e.g. 14.2" step="0.1" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Risk Factors -->
+        <div class="form-section fade-up-d2">
+          <div class="form-section-title">⚠️ Risk Factors</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem">
+            <label class="form-check" id="chk-smoking">
+              <input type="checkbox" id="smoking" onchange="toggleCheck(this,'chk-smoking')" />
+              <div>
+                <div style="font-size:0.875rem;font-weight:500">Smoker</div>
+                <div style="font-size:0.75rem;color:var(--text3)">Current or former</div>
+              </div>
+            </label>
+            <label class="form-check" id="chk-diabetes">
+              <input type="checkbox" id="diabetes" onchange="toggleCheck(this,'chk-diabetes')" />
+              <div>
+                <div style="font-size:0.875rem;font-weight:500">Diabetes</div>
+                <div style="font-size:0.75rem;color:var(--text3)">Type 1 or 2</div>
+              </div>
+            </label>
+            <label class="form-check" id="chk-brd">
+              <input type="checkbox" id="bloodRelDiabetes" onchange="toggleCheck(this,'chk-brd')" />
+              <div>
+                <div style="font-size:0.875rem;font-weight:500">Family Diabetes</div>
+                <div style="font-size:0.75rem;color:var(--text3)">Blood relatives</div>
+              </div>
+            </label>
+            <label class="form-check" id="chk-brs">
+              <input type="checkbox" id="bloodRelStroke" onchange="toggleCheck(this,'chk-brs')" />
+              <div>
+                <div style="font-size:0.875rem;font-weight:500">Family Stroke</div>
+                <div style="font-size:0.75rem;color:var(--text3)">Blood relatives</div>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div class="alert" id="formAlert"></div>
+
+        <button class="btn btn-primary btn-full" id="predictBtn" onclick="handlePredict()" style="font-size:1rem;padding:1rem">
+          🔍 Analyze My CVD Risk
+        </button>
+      </div>
+
+      <!-- Result Panel -->
+      <div style="position:sticky;top:80px">
+        <div class="result-panel" id="resultPanel">
+          <div class="result-title">Your Risk Assessment</div>
+          <div id="ringWrap"></div>
+          <div id="riskLevelBadge" style="margin:1rem 0"></div>
+          <div style="font-size:0.9375rem;color:var(--text2);margin-bottom:1.5rem" id="riskDesc"></div>
+          <hr class="divider" />
+          <div class="recommendations-list" id="recList"></div>
+          <div style="margin-top:1.5rem">
+            <a href="/history" class="btn btn-outline btn-full btn-sm">View History</a>
+          </div>
+          <p style="font-size:0.75rem;color:var(--text3);margin-top:1rem">⚠️ Educational purposes only. Consult a healthcare professional.</p>
+        </div>
+
+        <div class="card" id="helpPanel">
+          <div style="font-family:var(--font-head);font-size:0.9375rem;font-weight:600;margin-bottom:0.75rem">📖 Reference Ranges</div>
+          <div style="font-size:0.8125rem;color:var(--text2);display:flex;flex-direction:column;gap:0.5rem">
+            <div><strong>BP:</strong> Normal &lt;120/80 mmHg</div>
+            <div><strong>Cholesterol:</strong> Desirable &lt;200 mg/dL</div>
+            <div><strong>HDL:</strong> Good &gt;60 mg/dL</div>
+            <div><strong>Triglycerides:</strong> Normal &lt;150 mg/dL</div>
+            <div><strong>Glucose (fasting):</strong> Normal 70–99 mg/dL</div>
+            <div><strong>BMI:</strong> Healthy 18.5–24.9</div>
+            <div><strong>Hemoglobin:</strong> M: 13.5–17.5 · F: 12–15.5 g/dL</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script src="/js/main.js"></script>
+<script>
+initNav('predict');
+initHamburger();
+getUser().then(u => { if (!u.loggedIn) window.location.href = '/login'; });
+
+function toggleCheck(el, id) {
+  document.getElementById(id).classList.toggle('checked', el.checked);
+}
+
+async function handlePredict() {
+  const btn = document.getElementById('predictBtn');
+  const alert = document.getElementById('formAlert');
+
+  const fields = { age: 'age', gender: 'gender', systolic: 'systolic', diastolic: 'diastolic',
+    bmi: 'bmi', cholesterol: 'cholesterol', hdl: 'hdl', triglycerides: 'triglycerides',
+    glucose: 'glucose', hemoglobin: 'hemoglobin', moderateWork: 'moderateWork' };
+
+  const data = {};
+  for (const [key, id] of Object.entries(fields)) {
+    const val = document.getElementById(id).value;
+    if (!val) return showAlert(alert, `Please fill in: ${id.replace(/([A-Z])/g, ' $1')}`);
+    data[key] = isNaN(val) ? val : parseFloat(val);
+  }
+
+  data.smoking = document.getElementById('smoking').checked;
+  data.diabetes = document.getElementById('diabetes').checked;
+  data.bloodRelDiabetes = document.getElementById('bloodRelDiabetes').checked;
+  data.bloodRelStroke = document.getElementById('bloodRelStroke').checked;
+  data.moderateWork = data.moderateWork === 'true' || data.moderateWork === true;
+
+  btn.disabled = true;
+  btn.innerHTML = '<span class="loader"></span> Analyzing…';
+
+  try {
+    const res = await fetch('/api/predict', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    const result = await res.json();
+    if (result.success) {
+      showResult(result.result);
+      document.getElementById('helpPanel').style.display = 'none';
+    } else {
+      showAlert(alert, result.message);
+    }
+  } catch {
+    showAlert(alert, 'Network error. Please try again.');
+  }
+
+  btn.disabled = false;
+  btn.innerHTML = '🔍 Analyze My CVD Risk';
+}
+
+function showResult(r) {
+  const panel = document.getElementById('resultPanel');
+  panel.classList.add('show');
+
+  const colorMap = { Low: '#10b981', Moderate: '#f59e0b', High: '#ef4444' };
+  const color = colorMap[r.riskLevel];
+  const circ = 2 * Math.PI * 46;
+  const offset = circ - (r.probability / 100) * circ;
+
+  document.getElementById('ringWrap').innerHTML = `
+    <div style="position:relative;display:flex;justify-content:center;margin-bottom:0.5rem">
+      <svg class="risk-ring" width="120" height="120" viewBox="0 0 120 120">
+        <circle class="risk-ring-bg" cx="60" cy="60" r="46"/>
+        <circle class="risk-ring-fill" cx="60" cy="60" r="46"
+          stroke="${color}"
+          stroke-dasharray="${circ}"
+          stroke-dashoffset="${offset}"/>
+      </svg>
+      <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center">
+        <div style="font-family:var(--font-head);font-size:1.75rem;font-weight:800">${r.probability}%</div>
+        <div style="font-size:0.7rem;color:var(--text3)">risk</div>
+      </div>
+    </div>
+  `;
+
+  document.getElementById('riskLevelBadge').innerHTML = riskBadge(r.riskLevel);
+
+  const descs = {
+    Low: 'Your risk factors are within a favorable range. Continue your healthy habits and maintain regular check-ups.',
+    Moderate: 'You have some elevated risk factors. Lifestyle modifications and closer monitoring are recommended.',
+    High: 'Several significant risk factors detected. Please consult a healthcare professional promptly.'
+  };
+  document.getElementById('riskDesc').textContent = descs[r.riskLevel];
+
+  document.getElementById('recList').innerHTML = `
+    <div style="font-size:0.8125rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:var(--text3);margin-bottom:0.75rem">
+      Recommendations
+    </div>
+    ${r.recommendations.map(rec => `<div class="rec-item">${rec}</div>`).join('')}
+  `;
+
+  panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+</script>
+</body>
+</html>

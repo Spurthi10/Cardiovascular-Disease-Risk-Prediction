@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login — CardioGuard</title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+<div class="auth-wrap">
+  <div class="auth-card fade-up">
+    <a href="/" class="auth-logo">
+      <div class="logo-icon">🫀</div>
+      CardioGuard
+    </a>
+    <div class="auth-title">Welcome back</div>
+    <div class="auth-sub">Log in to access your risk dashboard</div>
+
+    <div class="alert" id="alert"></div>
+
+    <div class="form-group">
+      <label class="form-label">Email Address</label>
+      <input type="email" id="email" class="form-control" placeholder="you@example.com" autocomplete="email" />
+    </div>
+    <div class="form-group">
+      <label class="form-label">Password</label>
+      <input type="password" id="password" class="form-control" placeholder="••••••••" autocomplete="current-password" />
+    </div>
+
+    <button class="btn btn-primary btn-full" id="loginBtn" onclick="handleLogin()">
+      Sign In
+    </button>
+
+    <div class="auth-footer">
+      Don't have an account? <a href="/register">Create one free</a>
+    </div>
+  </div>
+</div>
+
+<script src="/js/main.js"></script>
+<script>
+// Redirect if already logged in
+getUser().then(u => { if (u.loggedIn) window.location.href = '/dashboard'; });
+
+async function handleLogin() {
+  const btn = document.getElementById('loginBtn');
+  const alert = document.getElementById('alert');
+  const email = document.getElementById('email').value.trim();
+  const password = document.getElementById('password').value;
+
+  if (!email || !password) return showAlert(alert, 'Please fill in all fields.');
+
+  btn.disabled = true;
+  btn.innerHTML = '<span class="loader"></span> Signing in…';
+
+  try {
+    const res = await fetch('/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password })
+    });
+    const data = await res.json();
+    if (data.success) {
+      window.location.href = data.redirect;
+    } else {
+      showAlert(alert, data.message);
+      btn.disabled = false;
+      btn.innerHTML = 'Sign In';
+    }
+  } catch {
+    showAlert(alert, 'Network error. Please try again.');
+    btn.disabled = false;
+    btn.innerHTML = 'Sign In';
+  }
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Enter') handleLogin(); });
+</script>
+</body>
+</html>
